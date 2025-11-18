@@ -1,0 +1,33 @@
+# Code::Blocks project files
+*.layout
+*.depend
+*.cbp.user
+
+# Compiled Object files
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Debugging and build artifacts
+bin/
+obj/
+*.log
