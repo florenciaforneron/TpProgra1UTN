@@ -1,4 +1,54 @@
 #include "funciones.h"
+#include <limits>
+#include <string>
+
+void cargarLoteMarcas(int vCodMarca[], string vNombreMarca[]){
+    cout << "Menu carga de lote de Marcas"<<endl;
+    cout << "-------------------------------"<<endl;
+
+    for(int i = 0; i<10; i++){
+        int codMarca = 0;
+        string nombreMarca;
+        bool entradaValida;
+
+        cout << "--- Ingrese datos del producto nro. " << i+1 << " ---" << endl;
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Codigo (1 a 10): ";
+
+            if (cin >> codMarca) {
+                if (codMarca >= 1 && codMarca <= 10) {
+                    entradaValida = true;
+                } else {
+                    cout << "Error: El codigo debe ser un numero entero entre 1 y 10." << endl;
+                }
+            } else {
+                cout << "Error: Debe ingresar un numero entero valido." << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Nombre: ";
+            getline(cin, nombreMarca);
+
+            if (nombreMarca.length() > 0) {
+                entradaValida = true;
+            } else {
+                cout << "Error: El nombre no debe estar vacio. Intente de nuevo." << endl;
+            }
+        }
+
+        cout << "-------------------------------"<<endl;
+        vCodMarca[i] = codMarca;
+        vNombreMarca[i] = nombreMarca;
+    }
+}
 
 
 bool esConsecutivo(int num) {

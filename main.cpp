@@ -4,7 +4,10 @@
 int main()
 {
 
-    //variables lote productos
+    const int CANT_MARCAS = 10;
+    const int CANT_NOMBRESMARCAS = 10;
+    int vCodMarca[CANT_MARCAS];
+    string vNombreMarca[CANT_NOMBRESMARCAS];
     int vCodProd[20], vStockProd[20], vCodMarcaProd[20];
     float vPrecioVentaProd[20], vPrecioCompraProd[20];
     string vNomProd[20];
@@ -27,7 +30,7 @@ int main()
         switch(opcionElegida){
             case 1:
                 system("cls");
-                cout << "Proximamente..." << endl;
+                cargarLoteMarcas(vCodMarca, vNombreMarca);
                 break;
             case 2:
                 system("cls");
