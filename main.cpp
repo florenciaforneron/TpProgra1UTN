@@ -30,7 +30,7 @@ int main()
     // =================================================================
 
     // ------ Marcas ------
-    int codMarcas[10] = {1,2,3,4,5,6,7,8,9,10};
+    /*int codMarcas[10] = {1,2,3,4,5,6,7,8,9,10};
     string nomMarcas[10] = {"Samsung","Apple","Sony","Xiaomi","LG","Motorola","HP","Dell","Lenovo","Asus"};
 
     for(int i = 0; i < TAMANIO_VEC_MARCAS; i++){
@@ -60,7 +60,7 @@ int main()
     }
 
     cout << "Mock cargado correctamente. Ej marca: " << nomMarcas[0]  << endl;
-
+    */
     bool seguirProceso = true;
     while(seguirProceso) {
         int opcionElegida;
@@ -76,15 +76,15 @@ int main()
         switch(opcionElegida){
             case 1:
                 system("cls");
-                //cargarLoteMarcas(vCodMarca, vNombreMarca);
+                cargarLoteMarcas(vCodMarca, vNombreMarca);
                 break;
             case 2:
                 system("cls");
-                //cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd, vCodMarca);
+                cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd, vCodMarca);
                 break;
             case 3:
                 system("cls");
-                //cargarLoteFP(vCodFP, vNomFP,vPorcFP);
+                cargarLoteFP(vCodFP, vNomFP,vPorcFP);
                 break;
             case 4:
                 system("cls");
