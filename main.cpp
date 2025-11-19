@@ -19,6 +19,9 @@ int main()
 
     int vCantidadVendidaAcumulada[TAMANIO_VEC_PRODUCTOS] = {0};
     float vTotalRecaudadoAcumulado[TAMANIO_VEC_PRODUCTOS] = {0.0f};
+
+    int vContadorVentasFP[CANT_FORMASPAGO] = {0};
+    int contadorTotalTransacciones = 0;
     // =================================================================
     //                        MOCK DE DATOS
     // =================================================================
@@ -82,12 +85,12 @@ int main()
                 break;
             case 4:
                 system("cls");
-                cargarLoteVentas(vCodProd, vCodFP, vStockProd, vPrecioVentaProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado);
-            break;
+                cargarLoteVentas(vCodProd, vCodFP, vStockProd, vPrecioVentaProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vContadorVentasFP, contadorTotalTransacciones);
+                break;
             case 5:
                 system("cls");
-                mostrarReportes(vCodProd, vNomProd, vPrecioVentaProd, vStockProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado);
-            break;
+                mostrarReportes(vCodProd, vNomProd, vPrecioVentaProd, vStockProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vCodFP, vNomFP, vContadorVentasFP, contadorTotalTransacciones);
+                break;
             case 6:
                 cout << "Proceso finalizado exitosamente" << endl;
                 seguirProceso = false;

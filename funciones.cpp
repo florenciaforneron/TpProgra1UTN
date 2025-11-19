@@ -283,7 +283,16 @@ int buscarIndiceProducto(int vCodProd[], int codigo, int tam) {
     return -1;
 }
 
-void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float vPrecioVentaProd[], int vCantVendida[], float vTotalRecaudado[]) {
+int buscarIndiceFP(string vCodFP[], string codigoFP, int tam) {
+    for (int i = 0; i < tam; i++) {
+        if (vCodFP[i] == codigoFP) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float vPrecioVentaProd[], int vCantVendida[], float vTotalRecaudado[],int vContadorVentasFP[], int& contadorTotalTransacciones){
     cout << "Menu carga y procesamiento de Lote de Ventas"<<endl;
     cout << "-----------------------------------------------"<<endl;
 
@@ -322,6 +331,7 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
         while (!entradaValida) {
             cout << "Forma de Pago (string): ";
             cin >> ventaActual.formaDePago;
+
             if (ventaActual.formaDePago.length() > 0) {
                 if(existeElementoVString(vCodFP, 5, ventaActual.formaDePago)){
                     entradaValida = true;
@@ -375,10 +385,10 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
             }
         }
 
-
         int indiceProducto = buscarIndiceProducto(vCodProd, ventaActual.codigoDeProducto, 20);
+        int indiceFP = buscarIndiceFP(vCodFP, ventaActual.formaDePago, 5);
 
-        if (indiceProducto != -1) {
+        if (indiceProducto != -1 && indiceFP != -1) {
 
             float precioVentaUnitario = vPrecioVentaProd[indiceProducto];
             float recaudacionVenta = precioVentaUnitario * ventaActual.cantidadVendida;
@@ -388,6 +398,9 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
 
 
             vStockProd[indiceProducto] -= ventaActual.cantidadVendida;
+
+            vContadorVentasFP[indiceFP]++;
+            contadorTotalTransacciones++;
 
             cout << "--- Registro de venta Nro. " << ventaActual.nroDeCompra << " PROCESADO ---" << endl;
         }
@@ -404,7 +417,7 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
     cout << "-----------------------------------------------"<<endl;
     cout << "Carga del Lote de Ventas finalizada." << endl;
 }
-
+/*
 void mostrarReportes(
     int vCodProd[],
     string vNomProd[],
@@ -414,7 +427,7 @@ void mostrarReportes(
     float vTotalRecaudado[]
 ) {
     cout << "-------------------------------------------------------------------------"<<endl;
-    cout << "|| REPORTE 1: RECAUDACIÓN POR PRODUCTO (Ordenado por Cantidad Vendida) ||" << endl;
+    cout << "|| REPORTE 1: RECAUDACION POR PRODUCTO (Ordenado por Cantidad Vendida) ||" << endl;
     cout << "-------------------------------------------------------------------------"<<endl;
 
     const int TAM = 20;
@@ -464,7 +477,7 @@ void mostrarReportes(
 
 
 
-    cout << "CODIGO | NOMBRE PRODUCTO \t\t | CANT. VENDIDA | TOTAL RECAUDADO | STOCK REMANENTE" << endl;
+    cout << "CODIGO | NOMBRE PRODUCTO| CANT. VENDIDA | TOTAL RECAUDADO | STOCK REMANENTE" << endl;
     cout << "--------------------------------------------------------------------------------" << endl;
 
     for(int i = 0; i < TAM; i++){
@@ -479,4 +492,106 @@ void mostrarReportes(
 
     cout << "--------------------------------------------------------------------------------" << endl;
     cout << endl;
+}
+*/
+const int TAM = 20;
+const int CANT_FP = 5;
+
+void mostrarReportes(int vCodProd[], string vNomProd[], float vPrecioVentaProd[], int vStockProd[], int vCantVendida[], float vTotalRecaudado[], string vCodFP[],string vNomFP[],int vContadorVentasFP[],int contadorTotalTransacciones) {
+
+    cout << "========================================================================" << endl;
+    cout << "|| REPORTE 1: RECAUDACIÓN POR PRODUCTO (Ordenado por Cantidad Vendida) ||" << endl;
+    cout << "========================================================================" << endl;
+
+    int temp_vCodProd[TAM];
+    string temp_vNomProd[TAM];
+    float temp_vTotalRecaudado[TAM];
+    int temp_vCantidadVendida[TAM];
+    int temp_vStockRemanente[TAM];
+
+    for(int i = 0; i < TAM; i++){
+        temp_vCodProd[i] = vCodProd[i];
+        temp_vNomProd[i] = vNomProd[i];
+        temp_vTotalRecaudado[i] = vTotalRecaudado[i];
+        temp_vCantidadVendida[i] = vCantVendida[i];
+        temp_vStockRemanente[i] = vStockProd[i];
+    }
+
+    for(int i = 0; i < TAM - 1; i++){
+        for(int j = 0; j < TAM - i - 1; j++){
+            if (temp_vCantidadVendida[j] < temp_vCantidadVendida[j+1]) {
+
+                int auxCant = temp_vCantidadVendida[j];
+                temp_vCantidadVendida[j] = temp_vCantidadVendida[j+1];
+                temp_vCantidadVendida[j+1] = auxCant;
+
+                int auxCod = temp_vCodProd[j];
+                temp_vCodProd[j] = temp_vCodProd[j+1];
+                temp_vCodProd[j+1] = auxCod;
+
+                string auxNom = temp_vNomProd[j];
+                temp_vNomProd[j] = temp_vNomProd[j+1];
+                temp_vNomProd[j+1] = auxNom;
+
+                float auxRec = temp_vTotalRecaudado[j];
+                temp_vTotalRecaudado[j] = temp_vTotalRecaudado[j+1];
+                temp_vTotalRecaudado[j+1] = auxRec;
+
+                int auxStock = temp_vStockRemanente[j];
+                temp_vStockRemanente[j] = temp_vStockRemanente[j+1];
+                temp_vStockRemanente[j+1] = auxStock;
+            }
+        }
+    }
+
+
+    cout << "========================================================================" << endl;
+    cout << "|| REPORTE 1: RECAUDACION POR PRODUCTO ||" << endl;
+    cout << "========================================================================" << endl;
+
+    cout << "CODIGO | NOMBRE PRODUCTO| CANT. VENDIDA | TOTAL RECAUDADO | STOCK REMANENTE" << endl;
+    cout << "--------------------------------------------------------------------------------" << endl;
+
+    for(int i = 0; i < TAM; i++){
+        if (temp_vCantidadVendida[i] > 0) {
+            cout << temp_vCodProd[i] << " \t "
+                 << temp_vNomProd[i] << " \t\t "
+                 << temp_vCantidadVendida[i] << " \t\t "
+                 << temp_vTotalRecaudado[i] << " \t\t "
+                 << temp_vStockRemanente[i] << endl;
+        }
+    }
+
+    cout << "========================================================================" << endl;
+
+    cout << "\n\n";
+
+    cout << "========================================================================" << endl;
+    cout << "|| REPORTE 2: PORCENTAJE DE VENTAS POR FORMA DE PAGO ||" << endl;
+    cout << "========================================================================" << endl;
+
+
+    if (contadorTotalTransacciones == 0) {
+        cout << "No se registraron ventas para calcular el porcentaje." << endl;
+        cout << "========================================================================" << endl;
+        return;
+    }
+
+    cout << "FORMA DE PAGO \t\t | PORCENTAJE (%)" << endl;
+    cout << "---------------------------------------" << endl;
+
+    for(int i = 0; i < CANT_FP; i++){
+        float porcentaje = 0.0f;
+
+        if (vContadorVentasFP[i] > 0) {
+            porcentaje = ( (float)vContadorVentasFP[i] / (float)contadorTotalTransacciones ) * 100.0f;
+        }
+
+        cout << vNomFP[i] << " \t\t "
+             << porcentaje << "%" << endl;
+    }
+
+    cout << "---------------------------------------" << endl;
+    cout << "TOTAL DE TRANSACCIONES: " << contadorTotalTransacciones << endl;
+    cout << "========================================================================" << endl;
 }
