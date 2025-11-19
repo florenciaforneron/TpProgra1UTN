@@ -27,13 +27,19 @@ bool vectorIntLleno(int vec[], int tam){
 }
 
 bool existeElementoVInt(int vec[], int tam, int valor){
-
     for(int i = 0; i < tam; i++){
         if(vec[i] == valor) {
             return true;
         }
     }
-
+    return false;
+}
+bool existeElementoVString(string vec[], int tam, string valor){
+    for(int i = 0; i < tam; i++){
+        if(vec[i] == valor) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -268,8 +274,7 @@ void cargarLoteFP(string vCodFP[], string vNomFP[], int vPorcFP[]){
     }
 }
 
-
-void cargarLoteVentas() {
+void cargarLoteVentas(int vCodProd[], string vCodFP[]) {
     cout << "Menu carga y procesamiento de Lote de Ventas"<<endl;
     cout << "-----------------------------------------------"<<endl;
 
@@ -290,7 +295,12 @@ void cargarLoteVentas() {
             cout << "Codigo de Producto: ";
             if (cin >> ventaActual.codigoDeProducto) {
                 if (ventaActual.codigoDeProducto > 0) {
-                    entradaValida = true;
+                        if(existeElementoVInt(vCodProd, 20, ventaActual.codigoDeProducto)){
+                            entradaValida = true;
+                        }
+                        else {
+                            cout << "Error: El Codigo de Producto ingresado no existe." << endl;
+                        }
                 } else {
                     cout << "Error: El Codigo de Producto debe ser mayor a 0." << endl;
                 }
@@ -305,7 +315,12 @@ void cargarLoteVentas() {
             cin >> ventaActual.formaDePago;
 
             if (ventaActual.formaDePago.length() > 0) {
-                entradaValida = true;
+                if(existeElementoVString(vCodFP, 5, ventaActual.formaDePago)){
+                    entradaValida = true;
+                }
+                else {
+                    cout << "Error: La forma de pago ingresada no existe." << endl;
+                }
             } else {
                 cout << "Error: La forma de pago no debe estar vacia." << endl;
             }
