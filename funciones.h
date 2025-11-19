@@ -22,6 +22,7 @@ bool esConsecutivo(int num);
 void cargarLoteProductos(int vCodProd[], string vNomProd[], float vPrecioVentaProd[], float vPrecioCompraProd[], int vStockProd[], int vCodMarcaProd[], int vCodMarca[]);
 void cargarLoteFP(string vCodFP[], string vNomFP[], int vPorcFP[]);
 void cargarLoteVentas(int vCodProd[], string vCodFP[]);
-
+void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float vPrecioVentaProd[], int vCantVendida[], float vTotalRecaudado[]);
+void mostrarReportes(int vCodProd[], string vNomProd[], float vPrecioVentaProd[], int vStockProd[], int vCantVendida[], float vTotalRecaudado[]);
 
 #endif // FUNCIONES_H_INCLUDED

@@ -16,6 +16,9 @@ int main()
     const int CANT_FORMASPAGO = 5;
     string vCodFP[CANT_FORMASPAGO], vNomFP[CANT_FORMASPAGO];
     int vPorcFP[CANT_FORMASPAGO];
+
+    int vCantidadVendidaAcumulada[TAMANIO_VEC_PRODUCTOS] = {0};
+    float vTotalRecaudadoAcumulado[TAMANIO_VEC_PRODUCTOS] = {0.0f};
     // =================================================================
     //                        MOCK DE DATOS
     // =================================================================
@@ -67,24 +70,24 @@ int main()
         switch(opcionElegida){
             case 1:
                 system("cls");
-                cargarLoteMarcas(vCodMarca, vNombreMarca);
+                //cargarLoteMarcas(vCodMarca, vNombreMarca);
                 break;
             case 2:
                 system("cls");
-                cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd, vCodMarca);
+                //cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd, vCodMarca);
                 break;
             case 3:
                 system("cls");
-                cargarLoteFP(vCodFP, vNomFP,vPorcFP);
+                //cargarLoteFP(vCodFP, vNomFP,vPorcFP);
                 break;
             case 4:
                 system("cls");
-                cargarLoteVentas(vCodProd, vCodFP);
-                break;
+                cargarLoteVentas(vCodProd, vCodFP, vStockProd, vPrecioVentaProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado);
+            break;
             case 5:
                 system("cls");
-                cout << "Proximamente..." << endl;
-                break;
+                mostrarReportes(vCodProd, vNomProd, vPrecioVentaProd, vStockProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado);
+            break;
             case 6:
                 cout << "Proceso finalizado exitosamente" << endl;
                 seguirProceso = false;
