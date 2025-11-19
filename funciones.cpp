@@ -2,6 +2,41 @@
 #include <limits>
 #include <string>
 
+void vaciarVectorProductos(
+    int vCodProd[],
+    string vNomProd[],
+    float vPrecioVentaProd[],
+    float vPrecioCompraProd[],
+    int vStockProd[],
+    int vCodMarcaProd[]){
+    for (int i = 0; i < 20; i++) {
+        vCodProd[i] = 0;
+        vNomProd[i] = "";
+        vPrecioVentaProd[i] = 0;
+        vPrecioCompraProd[i] = 0;
+        vStockProd[i] = 0;
+        vCodMarcaProd[i] = 0;
+    }
+}
+
+bool vectorIntLleno(int vec[], int tam){
+    for(int i = 0; i < tam; i++){
+        if(vec[i]==0) return false;
+    }
+    return true;
+}
+
+bool existeElementoVInt(int vec[], int tam, int valor){
+
+    for(int i = 0; i < tam; i++){
+        if(vec[i] == valor) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void cargarLoteMarcas(int vCodMarca[], string vNombreMarca[]){
     cout << "Menu carga de lote de Marcas"<<endl;
     cout << "-------------------------------"<<endl;
@@ -50,7 +85,6 @@ void cargarLoteMarcas(int vCodMarca[], string vNombreMarca[]){
     }
 }
 
-
 bool esConsecutivo(int num) {
     string numString = to_string(num);
     for(int i = 1; i < numString.length(); i++){
@@ -69,7 +103,14 @@ void cargarLoteProductos(
     float vPrecioVentaProd[],
     float vPrecioCompraProd[],
     int vStockProd[],
-    int vCodMarcaProd[]) {
+    int vCodMarcaProd[],
+    int vCodMarca[]
+    ) {
+    if(!vectorIntLleno(vCodMarca, 10)){
+        system("cls");
+        cout << "Es necesario cargar el lote de marcas para usar este menu" << endl;
+        return;
+    }
     cout << "Menu carga de lote de Productos"<<endl;
     cout << "-------------------------------"<<endl;
     for(int i = 0; i<20; i++){
@@ -132,6 +173,11 @@ void cargarLoteProductos(
         if(codMarca == 0){
             system("cls");
             cout << "El codigo de marca no debe estar vacio" << endl;
+            return;
+        }
+        if(!existeElementoVInt(vCodMarca, 10, codMarca)){
+            system("cls");
+            cout << "El codigo ingresado no existe" << endl;
             return;
         }
         cout << "-------------------------------"<<endl;

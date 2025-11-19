@@ -34,7 +34,7 @@ int main()
                 break;
             case 2:
                 system("cls");
-                cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd);
+                cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd, vCodMarca);
                 break;
             case 3:
                 system("cls");
