@@ -283,6 +283,15 @@ int buscarIndiceProducto(int vCodProd[], int codigo, int tam) {
     return -1;
 }
 
+int buscarIndiceMarca(int vCodMarca[], int codMarca, int tam) {
+    for (int i = 0; i < tam; i++) {
+        if (vCodMarca[i] == codMarca) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int buscarIndiceFP(string vCodFP[], string codigoFP, int tam) {
     for (int i = 0; i < tam; i++) {
         if (vCodFP[i] == codigoFP) {
@@ -292,7 +301,8 @@ int buscarIndiceFP(string vCodFP[], string codigoFP, int tam) {
     return -1;
 }
 
-void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float vPrecioVentaProd[], int vCantVendida[], float vTotalRecaudado[],int vContadorVentasFP[], int& contadorTotalTransacciones){
+void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float vPrecioVentaProd[], int vCantVendida[], float vTotalRecaudado[],int vContadorVentasFP[], int& contadorTotalTransacciones,
+    int vCodMarcaProd[], int vCodMarca[], int vCantVendidaMarcaFP[], int cantMarcas, int cantFP){
     cout << "Menu carga y procesamiento de Lote de Ventas"<<endl;
     cout << "-----------------------------------------------"<<endl;
 
@@ -402,6 +412,13 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
             vContadorVentasFP[indiceFP]++;
             contadorTotalTransacciones++;
 
+            int codMarcaProducto = vCodMarcaProd[indiceProducto];
+            int indiceMarca = buscarIndiceMarca(vCodMarca, codMarcaProducto, cantMarcas);
+            if (indiceMarca != -1) {
+                int pos = indiceMarca * cantFP + indiceFP;
+                vCantVendidaMarcaFP[pos] += ventaActual.cantidadVendida;
+            }
+
             cout << "--- Registro de venta Nro. " << ventaActual.nroDeCompra << " PROCESADO ---" << endl;
         }
 
@@ -497,7 +514,7 @@ void mostrarReportes(
 const int TAM = 20;
 const int CANT_FP = 5;
 
-void mostrarReportes(int vCodProd[], string vNomProd[], float vPrecioVentaProd[], int vStockProd[], int vCantVendida[], float vTotalRecaudado[], string vCodFP[],string vNomFP[],int vContadorVentasFP[],int contadorTotalTransacciones) {
+void mostrarReportes(int vCodProd[], string vNomProd[], float vPrecioVentaProd[], int vStockProd[], int vCantVendida[], float vTotalRecaudado[], string vCodFP[],string vNomFP[],int vContadorVentasFP[],int contadorTotalTransacciones, int vCodMarca[], string vNombreMarca[], int vCantVendidaMarcaFP[], int cantMarcas, int cantFP) {
 
     cout << "========================================================================" << endl;
     cout << "|| REPORTE 1: RECAUDACIÓN POR PRODUCTO (Ordenado por Cantidad Vendida) ||" << endl;
@@ -593,5 +610,35 @@ void mostrarReportes(int vCodProd[], string vNomProd[], float vPrecioVentaProd[]
 
     cout << "---------------------------------------" << endl;
     cout << "TOTAL DE TRANSACCIONES: " << contadorTotalTransacciones << endl;
+    cout << "========================================================================" << endl;
+
+    cout << "\n\n";
+
+    cout << "========================================================================" << endl;
+    cout << "|| REPORTE 3: VENTAS POR MARCA Y FORMA DE PAGO (CANTIDAD)            ||" << endl;
+    cout << "========================================================================" << endl;
+
+    cout << "MARCA\\FP";
+    for (int j = 0; j < cantFP; j++) {
+        cout << "\t" << vCodFP[j];
+    }
+    cout << "\tTOTAL MARCA" << endl;
+    cout << "------------------------------------------------------------------------" << endl;
+
+    for (int i = 0; i < cantMarcas; i++) {
+        int totalMarca = 0;
+
+        cout << vCodMarca[i] << "-" << vNombreMarca[i];
+
+        for (int j = 0; j < cantFP; j++) {
+            int pos = i * cantFP + j;
+            int cant = vCantVendidaMarcaFP[pos];
+            cout << "\t" << cant;
+            totalMarca += cant;
+        }
+
+        cout << "\t" << totalMarca << endl;
+    }
+
     cout << "========================================================================" << endl;
 }

@@ -22,6 +22,9 @@ int main()
 
     int vContadorVentasFP[CANT_FORMASPAGO] = {0};
     int contadorTotalTransacciones = 0;
+
+    int vCantVendidaMarcaFP[TAMANIO_VEC_MARCAS * CANT_FORMASPAGO] = {0};
+
     // =================================================================
     //                        MOCK DE DATOS
     // =================================================================
@@ -85,11 +88,13 @@ int main()
                 break;
             case 4:
                 system("cls");
-                cargarLoteVentas(vCodProd, vCodFP, vStockProd, vPrecioVentaProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vContadorVentasFP, contadorTotalTransacciones);
+                cargarLoteVentas(vCodProd, vCodFP, vStockProd, vPrecioVentaProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vContadorVentasFP, contadorTotalTransacciones,
+                    vCodMarcaProd, vCodMarca, vCantVendidaMarcaFP, TAMANIO_VEC_MARCAS, CANT_FORMASPAGO);
                 break;
             case 5:
                 system("cls");
-                mostrarReportes(vCodProd, vNomProd, vPrecioVentaProd, vStockProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vCodFP, vNomFP, vContadorVentasFP, contadorTotalTransacciones);
+                mostrarReportes(vCodProd, vNomProd, vPrecioVentaProd, vStockProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vCodFP, vNomFP, vContadorVentasFP, contadorTotalTransacciones,
+                    vCodMarca, vNombreMarca, vCantVendidaMarcaFP, TAMANIO_VEC_MARCAS, CANT_FORMASPAGO);
                 break;
             case 6:
                 cout << "Proceso finalizado exitosamente" << endl;
