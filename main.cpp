@@ -4,17 +4,17 @@
 int main()
 {
 
-    const int CANT_MARCAS = 10;
-    const int CANT_NOMBRESMARCAS = 10;
-    int vCodMarca[CANT_MARCAS];
-    string vNombreMarca[CANT_NOMBRESMARCAS];
+    const int TAMANIO_VEC_MARCAS = 10;
+    int vCodMarca[TAMANIO_VEC_MARCAS];
+    string vNombreMarca[TAMANIO_VEC_MARCAS];
+
     int vCodProd[20], vStockProd[20], vCodMarcaProd[20];
     float vPrecioVentaProd[20], vPrecioCompraProd[20];
     string vNomProd[20];
 
-    //variables lote formas de pago
-    string vCodFP[5], vNomFP[5];
-    int vPorcFP[5];
+    const int CANT_FORMASPAGO = 5;
+    string vCodFP[CANT_FORMASPAGO], vNomFP[CANT_FORMASPAGO];
+    int vPorcFP[CANT_FORMASPAGO];
 
     bool seguirProceso = true;
     while(seguirProceso) {
@@ -38,11 +38,12 @@ int main()
                 break;
             case 3:
                 system("cls");
-                cout << "Proximamente..." << endl;
+                cargarLoteFP(vCodFP, vNomFP,vPorcFP);
                 break;
             case 4:
                 system("cls");
-                cout << "Proximamente..." << endl;
+                cargarLoteVentas();
+
                 break;
             case 5:
                 system("cls");

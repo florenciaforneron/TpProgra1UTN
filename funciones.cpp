@@ -192,5 +192,177 @@ void cargarLoteProductos(
 }
 
 void cargarLoteFP(string vCodFP[], string vNomFP[], int vPorcFP[]){
+    cout << "Menu carga de lote de Formas de Pago"<<endl;
+    cout << "-------------------------------------"<<endl;
 
+    string vCodigosIngresados[5] = {"", "", "", "", ""};
+    int totalCodigosIngresados = 0;
+
+    for(int i = 0; i < 5; i++){
+        string codFP, nomFP;
+        int porcFP;
+        bool entradaValida;
+
+        cout << "--- Ingrese datos de la Forma de Pago nro. " << i + 1 << " ---" << endl;
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Codigo (EF, MP, TR, TC, CT): ";
+            cin >> codFP;
+
+            if (codFP == "EF" || codFP == "MP" || codFP == "TR" || codFP == "TC" || codFP == "CT") {
+
+                bool codigoRepetido = false;
+                int j = 0;
+                while (j < totalCodigosIngresados) {
+                    if (codFP == vCodigosIngresados[j]) {
+                        codigoRepetido = true;
+                        break;
+                    }
+                    j++;
+                }
+
+                if (codigoRepetido) {
+                    cout << "Error: El codigo '" << codFP << "' ya fue ingresado. Intente con otro." << endl;
+                } else {
+                    entradaValida = true;
+                }
+
+            } else {
+                cout << "Error: El codigo debe ser uno de los permitidos (EF, MP, TR, TC, CT)." << endl;
+            }
+        }
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Nombre: ";
+            cin >> nomFP;
+
+            if (nomFP.length() == 0) {
+                cout << "Error: El nombre no debe estar vacio." << endl;
+            } else {
+                entradaValida = true;
+            }
+        }
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Porcentaje (interes + / descuento -): ";
+            cin >> porcFP;
+
+            if (porcFP == 0) {
+                entradaValida = true;
+            } else {
+                entradaValida = true;
+            }
+        }
+
+        vCodFP[i] = codFP;
+        vNomFP[i] = nomFP;
+        vPorcFP[i] = porcFP;
+
+        vCodigosIngresados[totalCodigosIngresados] = codFP;
+        totalCodigosIngresados++;
+
+        cout << "-------------------------------------"<<endl;
+    }
 }
+
+
+void cargarLoteVentas() {
+    cout << "Menu carga y procesamiento de Lote de Ventas"<<endl;
+    cout << "-----------------------------------------------"<<endl;
+
+    LoteDeVentas ventaActual;
+    bool entradaValida;
+    int contadorRegistros = 1;
+
+
+    cout << "Ingrese Nro de Compra (0 para finalizar): ";
+    cin >> ventaActual.nroDeCompra;
+
+    while(ventaActual.nroDeCompra != 0) {
+
+        cout << "--- Registro de Venta nro. " << contadorRegistros << " ---" << endl;
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Codigo de Producto: ";
+            if (cin >> ventaActual.codigoDeProducto) {
+                if (ventaActual.codigoDeProducto > 0) {
+                    entradaValida = true;
+                } else {
+                    cout << "Error: El Codigo de Producto debe ser mayor a 0." << endl;
+                }
+            } else {
+                cout << "Error: Debe ingresar un numero entero valido." << endl;
+            }
+        }
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Forma de Pago (string): ";
+            cin >> ventaActual.formaDePago;
+
+            if (ventaActual.formaDePago.length() > 0) {
+                entradaValida = true;
+            } else {
+                cout << "Error: La forma de pago no debe estar vacia." << endl;
+            }
+        }
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Cantidad Vendida: ";
+            if (cin >> ventaActual.cantidadVendida) {
+                if (ventaActual.cantidadVendida > 0) {
+                    entradaValida = true;
+                } else {
+                    cout << "Error: La cantidad vendida debe ser mayor a 0." << endl;
+                }
+            } else {
+                cout << "Error: Debe ingresar un numero entero valido." << endl;
+            }
+        }
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Codigo de Cliente (1 a 50): ";
+            if (cin >> ventaActual.codCliente) {
+                if (ventaActual.codCliente >= 1 && ventaActual.codCliente <= 50) {
+                    entradaValida = true;
+                } else {
+                    cout << "Error: El Codigo de Cliente debe estar entre 1 y 50." << endl;
+                }
+            } else {
+                cout << "Error: Debe ingresar un numero entero valido." << endl;
+            }
+        }
+
+        entradaValida = false;
+        while (!entradaValida) {
+            cout << "Dia de la Venta (1 a 30): ";
+            if (cin >> ventaActual.diaVenta) {
+                if (ventaActual.diaVenta >= 1 && ventaActual.diaVenta <= 30) {
+                    entradaValida = true;
+                } else {
+                    cout << "Error: El Dia de la Venta debe estar entre 1 y 30." << endl;
+                }
+            } else {
+                cout << "Error: Debe ingresar un numero entero valido." << endl;
+            }
+        }
+
+        cout << "--- Registro de venta Nro. " << ventaActual.nroDeCompra << " procesado ---" << endl;
+
+        contadorRegistros++;
+
+        cout << "-----------------------------------------------" << endl;
+        cout << "Ingrese Nro de Compra (0 para finalizar): ";
+        cin >> ventaActual.nroDeCompra;
+    }
+
+    cout << "-----------------------------------------------"<<endl;
+    cout << "Carga del Lote de Ventas finalizada." << endl;
+}
+
