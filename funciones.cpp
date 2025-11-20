@@ -25,10 +25,15 @@ bool vectorIntLleno(int vec[], int tam){
     }
     return true;
 }
-
-bool existeElementoVInt(int vec[], int tam, int valor){
+bool vectorMarcaLleno(Marca vMarcas[], int tam){
     for(int i = 0; i < tam; i++){
-        if(vec[i] == valor) {
+        if(vMarcas[i].codigo==0) return false;
+    }
+    return true;
+}
+bool existeElementoVMarca(Marca vMarcas[], int tam, int valor){
+    for(int i = 0; i < tam; i++){
+        if(vMarcas[i].codigo == valor) {
             return true;
         }
     }
@@ -42,8 +47,7 @@ bool existeElementoVString(string vec[], int tam, string valor){
     }
     return false;
 }
-
-void cargarLoteMarcas(int vCodMarca[], string vNombreMarca[]){
+void cargarLoteMarcas(Marca vMarcas[]){
     cout << "Menu carga de lote de Marcas"<<endl;
     cout << "-------------------------------"<<endl;
 
@@ -86,8 +90,8 @@ void cargarLoteMarcas(int vCodMarca[], string vNombreMarca[]){
         }
 
         cout << "-------------------------------"<<endl;
-        vCodMarca[i] = codMarca;
-        vNombreMarca[i] = nombreMarca;
+        vMarcas[i].codigo = codMarca;
+        vMarcas[i].nombre = nombreMarca;
     }
 }
 
@@ -104,15 +108,10 @@ bool esConsecutivo(int num) {
 }
 
 void cargarLoteProductos(
-    int vCodProd[],
-    string vNomProd[],
-    float vPrecioVentaProd[],
-    float vPrecioCompraProd[],
-    int vStockProd[],
-    int vCodMarcaProd[],
-    int vCodMarca[]
+        Producto vProductos[],
+        Marca vMarcas[]
     ) {
-    if(!vectorIntLleno(vCodMarca, 10)){
+    if(!vectorMarcaLleno(vMarcas, 10)){
         system("cls");
         cout << "Es necesario cargar el lote de marcas para usar este menu" << endl;
         return;
@@ -181,23 +180,23 @@ void cargarLoteProductos(
             cout << "El codigo de marca no debe estar vacio" << endl;
             return;
         }
-        if(!existeElementoVInt(vCodMarca, 10, codMarca)){
+        if(!existeElementoVMarca(vMarcas, 10, codMarca)){
             system("cls");
             cout << "El codigo ingresado no existe" << endl;
             return;
         }
         cout << "-------------------------------"<<endl;
 
-        vCodProd[i] = cod;
-        vNomProd[i] = nombre;
-        vPrecioVentaProd[i] = precioVenta;
-        vPrecioCompraProd[i] = precioCompra;
-        vStockProd[i] = stock;
-        vCodMarcaProd[i] = codMarca;
+        vProductos[i].codigo = cod;
+        vProductos[i].nombre = nombre;
+        vProductos[i].precioVenta = precioVenta;
+        vProductos[i].precioCompra = precioCompra;
+        vProductos[i].stock = stock;
+        vProductos[i].codigoMarca = codMarca;
     }
 }
 
-void cargarLoteFP(string vCodFP[], string vNomFP[], int vPorcFP[]){
+void cargarLoteFP(FormaPago vFormasPago[]){
     cout << "Menu carga de lote de Formas de Pago"<<endl;
     cout << "-------------------------------------"<<endl;
 
@@ -261,9 +260,9 @@ void cargarLoteFP(string vCodFP[], string vNomFP[], int vPorcFP[]){
             }
         }
 
-        vCodFP[i] = codFP;
-        vNomFP[i] = nomFP;
-        vPorcFP[i] = porcFP;
+        vFormasPago[i].codigo = codFP;
+        vFormasPago[i].nombre = nomFP;
+        vFormasPago[i].porcentaje = porcFP;
 
         vCodigosIngresados[totalCodigosIngresados] = codFP;
         totalCodigosIngresados++;
@@ -304,7 +303,7 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
     cout << "Menu carga y procesamiento de Lote de Ventas"<<endl;
     cout << "-----------------------------------------------"<<endl;
 
-    LoteDeVentas ventaActual;
+    Venta ventaActual;
     bool entradaValida;
     int contadorRegistros = 1;
 
@@ -432,10 +431,10 @@ void cargarLoteVentas(int vCodProd[], string vCodFP[], int vStockProd[], float v
     cout << "-----------------------------------------------"<<endl;
     cout << "Carga del Lote de Ventas finalizada." << endl;
 }
-const int TAM = 20;
-const int CANT_FP = 5;
-
 void mostrarReportes(int vCodProd[], string vNomProd[], float vPrecioVentaProd[], int vStockProd[], int vCantVendida[], float vTotalRecaudado[], string vCodFP[],string vNomFP[],int vContadorVentasFP[],int contadorTotalTransacciones, int vCodMarca[], string vNombreMarca[], int vCantVendidaMarcaFP[], int cantMarcas, int cantFP) {
+
+    const int TAM = 20;
+    const int CANT_FP = 5;
 
     cout << "========================================================================" << endl;
     cout << "|| REPORTE 1: RECAUDACIÓN POR PRODUCTO (Ordenado por Cantidad Vendida) ||" << endl;

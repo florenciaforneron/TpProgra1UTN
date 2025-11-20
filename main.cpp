@@ -13,17 +13,21 @@ int main()
     float vPrecioVentaProd[TAMANIO_VEC_PRODUCTOS], vPrecioCompraProd[TAMANIO_VEC_PRODUCTOS];
     string vNomProd[TAMANIO_VEC_PRODUCTOS];
 
-    const int CANT_FORMASPAGO = 5;
-    string vCodFP[CANT_FORMASPAGO], vNomFP[CANT_FORMASPAGO];
-    int vPorcFP[CANT_FORMASPAGO];
+    const int TAMANIO_VEC_FORMASPAGO = 5;
+    string vCodFP[TAMANIO_VEC_FORMASPAGO], vNomFP[TAMANIO_VEC_FORMASPAGO];
+    int vPorcFP[TAMANIO_VEC_FORMASPAGO];
 
     int vCantidadVendidaAcumulada[TAMANIO_VEC_PRODUCTOS] = {0};
     float vTotalRecaudadoAcumulado[TAMANIO_VEC_PRODUCTOS] = {0.0f};
 
-    int vContadorVentasFP[CANT_FORMASPAGO] = {0};
+    int vContadorVentasFP[TAMANIO_VEC_FORMASPAGO] = {0};
     int contadorTotalTransacciones = 0;
 
-    int vCantVendidaMarcaFP[TAMANIO_VEC_MARCAS * CANT_FORMASPAGO] = {0};
+    int vCantVendidaMarcaFP[TAMANIO_VEC_MARCAS * TAMANIO_VEC_FORMASPAGO] = {0};
+
+    Marca vMarcas[TAMANIO_VEC_MARCAS];
+    Producto vProductos[TAMANIO_VEC_PRODUCTOS];
+    FormaPago vFormasPago[TAMANIO_VEC_FORMASPAGO];
 
     // =================================================================
     //                        MOCK DE DATOS
@@ -76,25 +80,25 @@ int main()
         switch(opcionElegida){
             case 1:
                 system("cls");
-                cargarLoteMarcas(vCodMarca, vNombreMarca);
+                cargarLoteMarcas(vMarcas);
                 break;
             case 2:
                 system("cls");
-                cargarLoteProductos(vCodProd, vNomProd, vPrecioVentaProd, vPrecioCompraProd, vStockProd, vCodMarcaProd, vCodMarca);
+                cargarLoteProductos(vProductos, vMarcas);
                 break;
             case 3:
                 system("cls");
-                cargarLoteFP(vCodFP, vNomFP,vPorcFP);
+                cargarLoteFP(vFormasPago);
                 break;
             case 4:
                 system("cls");
                 cargarLoteVentas(vCodProd, vCodFP, vStockProd, vPrecioVentaProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vContadorVentasFP, contadorTotalTransacciones,
-                    vCodMarcaProd, vCodMarca, vCantVendidaMarcaFP, TAMANIO_VEC_MARCAS, CANT_FORMASPAGO);
+                    vCodMarcaProd, vCodMarca, vCantVendidaMarcaFP, TAMANIO_VEC_MARCAS, TAMANIO_VEC_FORMASPAGO);
                 break;
             case 5:
                 system("cls");
                 mostrarReportes(vCodProd, vNomProd, vPrecioVentaProd, vStockProd, vCantidadVendidaAcumulada, vTotalRecaudadoAcumulado, vCodFP, vNomFP, vContadorVentasFP, contadorTotalTransacciones,
-                    vCodMarca, vNombreMarca, vCantVendidaMarcaFP, TAMANIO_VEC_MARCAS, CANT_FORMASPAGO);
+                    vCodMarca, vNombreMarca, vCantVendidaMarcaFP, TAMANIO_VEC_MARCAS, TAMANIO_VEC_FORMASPAGO);
                 break;
             case 6:
                 cout << "Proceso finalizado exitosamente" << endl;
